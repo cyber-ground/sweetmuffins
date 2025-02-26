@@ -1,0 +1,371 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: 'n0rpicons2';
+  src: local('n0rpicons2'),
+  url('font/n0rpicons2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Orbitron-Bold';
+  src: local('Orbitron-Bold'),
+  url('font/Orbitron-Bold.ttf') format('truetype');
+  font-display: swap;
+}
+
+$color: #e6fd80;
+$heart: #ff9ce6;
+
+//* Sweet muffin --------------------
+
+body {
+  font-family: 'n0rpicons2';
+  background-color: #121212;
+  height: 100dvh;
+  overflow: hidden;
+  transition: .5s;
+  transition-delay: 0s;
+  &.activate {
+    transition: 1s;
+    transition-delay: 1s;
+    background-color: #fe617b;
+  }
+}
+
+.video {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  @media (min-width:431px) {
+    display: block;
+  }
+  @media (min-width:767px) {
+    display: none;
+  } 
+  @media (min-width:812px) {
+    display: block;
+  } 
+}
+
+.heart-grid {
+  position: relative;
+  overflow: hidden;
+  .splash-screen {
+    position: absolute;
+    inset: 10px;
+    background: linear-gradient(-135deg, #000, #ec53cd);
+    z-index: 1000;
+    transition: 1.5s;
+    transition-delay: .5s;
+    border-radius: 10px;
+    box-shadow: 0 0 0 20px #000;
+    overflow: hidden; 
+    &.inactive {
+      transform: translateY(120%);
+      border-radius: 40px;
+      visibility: hidden;
+      opacity: 0;
+    }
+    &.inactive .muffin {
+      transition: .5s;
+      opacity: 0;
+    }
+    &.menubarHidden .title {
+      transition: top 1s;
+      top: 20%;
+    }
+    &.menubarHidden .figure {
+      font-size: 137vh;
+    }
+    &.menubarHidden .btnEnter {
+      transition: top 1s;
+      top: 52%; 
+      left: 64%;
+    }
+    .warn {
+      font-family: 'Orbitron-Bold';
+      position: absolute;
+      bottom: 5px;
+      right: 15px;
+      color: #121212;
+      font-size: 3.8vw;
+      -webkit-text-stroke: 1vw #ec53cd80;
+      paint-order: stroke;
+      z-index: 10000;
+      transition: 0s;
+      &.inactive {
+        transition: .8s;
+        opacity: 0;
+      }
+      span.symbol {
+        font-size: 1.2em;
+      }
+    }
+    .title {
+      position: absolute;
+      right: -20px;
+      top:  16%;
+      width: 320px;
+      height: 250px;
+      background-image: url('svg/sweetMuffins.svg');
+      background-position: center;
+      background-size: 270px 250px;
+      background-repeat: no-repeat;
+      transition: top .3s, opacity 1s;
+      z-index: 1000;
+      pointer-events: none;
+      &.inactive {
+        opacity: 0;
+      }
+      @media (min-width: 767px) {
+        width: 620px;
+        height: 400px;
+        background-size: 500px 550px;
+        opacity: .8;
+      }
+    }
+    .figure {
+      font-family:'n0rpicons2';
+      position: absolute;
+      inset: 0;
+      line-height: .73;
+      font-size: 113vh;
+      margin-left: 20px;
+      color: #333333dc;
+      color: #000;
+      opacity: 0;
+      transition: font-size .5s, opacity 0s;
+    }
+    .btnEnter {
+      font-family: 'Orbitron-Bold';
+      position: absolute;
+      top: 57%;
+      left: 73%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5em;
+      padding: 15px 20px 10px;
+      border-radius: 30px;
+      color: #ddff00e9;
+      background-color: rgba(255,255,255,0.2);
+      box-shadow: inset 1px 1px 1px rgba(255,255,255,0.2),
+      inset -1px -1px 3px #ddff00e9;
+      transition: top .3s;
+      cursor: pointer;
+      &.active {
+        transition: transform 1s, opacity .8s;
+        transform: scale(1.2) translate(calc(-50% + 15px), calc(-50% - 0px));
+        opacity: 0;
+      }
+      &:active {
+        background-color: rgba(255,255,255,0.1);
+      }
+      &.pulse {
+        animation: pulse 1s 6 linear forwards;
+      }
+    }
+    .heartWrapper {
+      position: absolute;
+      z-index: 10000;
+      transition: .5s;
+      opacity: 0;
+      pointer-events: none;
+      &.active {
+        transform-origin: var(--originX) var(--originY);
+        animation: animateHeartWrapper 3s linear forwards;
+      }
+      .heart {
+        transform-origin: initial;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #f00;
+        width: 50px;
+        aspect-ratio: 1;
+        opacity: .5;
+        &.active {
+          animation: animateHeart .5s linear infinite forwards
+        }
+      }
+    }
+  }
+  .container {
+    height: 100dvh;
+    overflow: hidden;
+    position: relative;
+    @media (min-width:431px) {
+      display: none;
+    }
+    @media (min-width:767px) {
+      display: block;
+    }
+    @media (min-width:812px) {
+      display: none;
+    }
+    .muffin {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      border-radius: 50%;
+      color: rgb(255, 255, 255);
+      background-color:rgba(254, 97, 123, 0.55); 
+      padding: 2px 10px 9px 9px;
+      display: none;
+      &.activate {
+        display: block;
+        z-index: 100000;
+      }
+      .svgMuffin {
+        width: 50px;
+        height: 50px;
+        animation: animateMuffin 2.5s ease-in-out infinite forwards;
+        padding: 0 0px 3px 0px;
+      }
+    }
+    .msg {
+      font-family: Arial, Helvetica, sans-serif;
+      position: absolute;
+      bottom: 25px;
+      right: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: rgb(254, 97, 123);
+      color: #fff;
+      background-color:rgba(254, 97, 123, 0.55);
+      padding:  0 10px;
+      border-radius: 10px;
+      display: none;
+      &.activate {
+        display: block;
+      }
+      .fa-phone {
+        transform: rotate(-15deg);
+        padding: 5px 0;
+        margin-left: 5px;
+      }
+    }
+    .image-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      .image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 1s;
+        @media (min-width: 815px) {
+          object-fit: fill;
+        }  // desktop
+      }
+    }
+    .star-wrapper {
+      position: absolute;
+      bottom: 30px;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      &.inactive {
+        display: none;
+      }
+      .white-star {
+        width: 40px;       
+        height: 40px;      
+        font-size: 34px;   
+        line-height: 41px;  
+        text-align: center;
+        color: #fff;
+        background-color: #ee9aff;
+        border-radius: 50%;
+        &.redStar {
+          color: #f00;
+        }
+        &.blackStar {
+          color: #000;
+        }
+      }
+    }
+  }
+  .red-heart {
+    font-size: 40px;
+    color: red;
+    z-index: 3;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .heartSign {
+    position: absolute;
+    width: 50px;
+    aspect-ratio: 1;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 1s 1s;
+    -webkit-text-stroke: #ffffff33 3px;
+    &.active {
+      opacity: .3;
+    }
+  }
+}
+
+@keyframes animateHeartWrapper {
+  0% {
+    transform:translate(0px, 0px) rotate(0deg);
+  }
+  100% {
+    transform: translate(0px, var(--destinationY)) rotate(var(--rotate));
+  }
+}
+
+@keyframes animateHeart {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(var(--rotate));
+  }
+}
+
+@keyframes animateMuffin {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.8); 
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .3;
+  }
+
+}
+
+
+// --------------------------------------------------
+
+
+
+
+
+
+
+
+
+
